@@ -19,6 +19,17 @@ spec:
           name: mongodb
           ports:
             - containerPort: 27017
+          #startup probe
+          startupProbe:
+          # to execute a command in terminal
+          exec:
+            #check if mongodb deamon is running correctly
+            command:
+              - mongod
+              - --version
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 1
           # env:
           #   # get the user name and password from the secret
           #   - name: MONGO_INITDB_ROOT_USERNAME
