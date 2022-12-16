@@ -31,13 +31,13 @@ spec:
                   name: react-app-env
                   key: API_SERVER
           # probe type
-          # readinessProbe:
-          #   # method to check nginx server by http get request
-          #   httpGet:
-          #     # path to send request
-          #     path: /
-          #     #port to send request (ip is the container ip by default )
-          #     port: 80
-          #   initialDelaySeconds: 20
-          #   periodSeconds: 5
-          #   failureThreshold: 1
+          readinessProbe:
+            # method to check nginx server by http get request
+            httpGet:
+              # path to send request
+              path: /index.html
+              #port to send request (ip is the container ip by default )
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 1
