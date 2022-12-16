@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+        - image: frontend
+          name: frontend-container
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          # get environnement variables from configmap
+          env:
+            - name: CLOUDL_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: react-app-env
+                  key: CLOUDL_SERVER
+            - name: API_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: react-app-env
+                  key: API_SERVER
+          # probe type
+          # readinessProbe:
+          #   # method to check nginx server by http get request
+          #   httpGet:
+          #     # path to send request
+          #     path: /
+          #     #port to send request (ip is the container ip by default )
+          #     port: 80
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 5
+          #   failureThreshold: 1

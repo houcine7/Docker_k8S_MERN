@@ -1,0 +1,25 @@
+version: "3.9"
+volumes:
+  mongo-volume:
+    external: true
+services:
+  backend:
+    image: localhost:5050/backend-img
+    depends_on:
+      - mongodb-service
+    ports:
+      - "5000:5000"
+  mongodb-service:
+    image: localhost:5050/mongo
+    ports:
+      - 27017:27017
+
+    volumes:
+      - mongo-volume:/data:ro
+
+  frontend:
+    image: localhost:5050/front-img:v1
+    depends_on:
+      - backend
+    ports:
+      - "8000:80"

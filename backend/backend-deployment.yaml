@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - image: backend
+          name: backend-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 2020
+          # to create the livenss probe
+          # livenessProbe:
+          #   # type of probe is http check
+          #   httpGet:
+          #     # path to check code status from (the host is by default is the pods ip )
+          #     path: /
+          #     # port of app in container
+          #     port: 2020
+          #   # how much to wait to initate the probe since it created for the first time
+          #   initialDelaySeconds: 4
+          #   # perform the probe each 3s
+          #   periodSeconds: 3
+          #   # minimum consecutive failure for the probe to be considered failure
+          #   failureThreshold: 2

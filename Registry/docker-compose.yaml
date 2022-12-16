@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  myregistry:
+    image: registry:latest
+    restart: always
+    ports:
+      - 5050:5000
+    container_name: myregistry
+    environment:
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: "['*']"
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    volumes:
+      - ./data:/var/lib/registry
+  ui:
+    image: joxit/docker-registry-ui:latest
+    restart: always
+    container_name: registry-ui
+    environment:
+      - REGISTRY_TITLE=Private Docker Registry
+      - DEFAULT_REGISTRIES=http://localhost:5050
+      - DELETE_IMAGES=true
+      - READ_ONLY_REGISTRIES=true
+      - SINGLE_REGISTRY=false
+    ports:
+      - 4000:80

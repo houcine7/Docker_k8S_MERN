@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: react-app-env
+data:
+  CLOUDL_SERVER: localhost
+  API_SERVER: localhost:2020/
